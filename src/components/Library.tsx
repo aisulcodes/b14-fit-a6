@@ -32,11 +32,11 @@ export default function Library() {
   return (
     <section
       id="library"
-      className="bg-[#0d0e10] px-6 py-20 md:px-10 lg:px-16"
+      className="bg-[#0d0e10] px-4 py-14 sm:px-6 sm:py-16 md:px-10 md:py-20 lg:px-16"
     >
       {/* section setting */}
       <div className="mb-10">
-        <h2 className="text-4xl font-bold uppercase tracking-wide text-white md:text-5xl">THE LIBRARY</h2>
+        <h2 className="text-3xl font-bold uppercase tracking-wide text-white sm:text-4xl md:text-5xl">THE LIBRARY</h2>
 
         <p className="mt-3 text-sm text-gray-400 md:text-base">Twelve lifts covering every major muscle group.</p>
       </div>

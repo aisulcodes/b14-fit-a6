@@ -156,7 +156,7 @@ export default function MyPlan() {
                 </option>
               </select>
 
-            
+
               <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[9px] text-gray-500">
                 ▼
               </span>
@@ -179,6 +179,9 @@ export default function MyPlan() {
                 <Image
                   src={workout.image}
                   alt={workout.name}
+                  width={128}
+                  height={80}
+                  unoptimized
                   className="h-28 w-full rounded-lg object-cover sm:h-20 sm:w-32"
                 />
 
@@ -210,7 +213,7 @@ export default function MyPlan() {
                   </div>
                 </div>
 
-                {/* action */}
+                {/* Actions */}
                 <div className="flex flex-wrap items-center gap-3">
                   <Link
                     href={`/workouts/${workout.id}`}
@@ -219,6 +222,7 @@ export default function MyPlan() {
                     View Details
                   </Link>
 
+                  {/* Only Today's Plan */}
                   {activeTab === "plan" && (
                     <button
                       onClick={() => markAsDone(workout.id)}
@@ -228,6 +232,7 @@ export default function MyPlan() {
                     </button>
                   )}
 
+                  {/* Remove */}
                   <button
                     onClick={() =>
                       activeTab === "plan"
@@ -266,6 +271,6 @@ export default function MyPlan() {
         )}
 
       </div>
-    </main>
+    </main >
   );
 }

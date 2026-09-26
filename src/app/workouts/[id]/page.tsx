@@ -61,6 +61,9 @@ export default function WorkoutDetails() {
             <Image
               src={workout.image}
               alt={workout.name}
+              width={1200}
+              height={650}
+              unoptimized
               className="h-full max-h-[650px] w-full rounded-2xl object-cover"
             />
           </div>
