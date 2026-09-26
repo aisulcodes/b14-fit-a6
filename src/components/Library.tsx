@@ -43,7 +43,9 @@ export default function Library() {
 
       {/* loading */}
       {loading && (
-        <p className="text-sm text-gray-400">Loading workouts...</p>
+        <div className="flex min-h-[220px] items-center justify-center">
+          <div className="h-10 w-10 animate-spin rounded-full border-4 border-[#292c32] border-t-[#b7ff3c]"></div>
+        </div>
       )}
 
       {/* error er jonno */}
