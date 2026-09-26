@@ -1,5 +1,6 @@
 "use client";
 
+import { useFitlog } from "@/context/FitlogContext";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -7,6 +8,8 @@ import { usePathname } from "next/navigation";
 import logo from "@/assets/logo.png";
 
 export default function Navbar() {
+    const { plan, saved } = useFitlog();
+
     const pathname = usePathname();
 
     const isWorkoutActive = pathname === "/";
@@ -43,21 +46,27 @@ export default function Navbar() {
                 {/* right side er jonno */}
                 <div className="ml-auto flex items-center gap-6 text-xs">
 
-                    <div className="flex items-center gap-2 text-[#b1b4bb]">
+                    <Link
+                        href="/my-plan"
+                        className="flex items-center gap-2 text-[#b1b4bb] hover:text-white"
+                    >
                         <span>Plan</span>
 
                         <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-[#ccff00] px-1.5 text-[11px] font-bold text-black">
-                            0
+                            {plan.length}
                         </span>
-                    </div>
+                    </Link>
 
-                    <div className="flex items-center gap-2 text-[#b1b4bb]">
+                    <Link
+                        href="/my-plan"
+                        className="flex items-center gap-2 text-[#b1b4bb] hover:text-white"
+                    >
                         <span>Saved</span>
 
                         <span className="flex h-5 min-w-5 items-center justify-center rounded-full border border-[#383b42] px-1.5 text-[11px] text-[#b1b4bb]">
-                            0
+                            {saved.length}
                         </span>
-                    </div>
+                    </Link>
 
                 </div>
             </div>
