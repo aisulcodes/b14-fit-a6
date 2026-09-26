@@ -10,7 +10,7 @@ export default function Library() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    fetch("https://api.abcz.workers.dev/api/fitlog")
+    fetch("https://api.api-store.workers.dev/api/fitlog")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Failed to fetch workouts");

@@ -18,7 +18,7 @@ export default function WorkoutDetails() {
     const fetchWorkout = async () => {
       try {
         const response = await fetch(
-          `https://api.abcz.workers.dev/api/fitlog/${params.id}`
+          `https://api.api-store.workers.dev/api/fitlog/${params.id}`
         );
 
         const data: Workout = await response.json();
