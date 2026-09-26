@@ -20,6 +20,7 @@ interface FitlogContextType {
 
   removeFromPlan: (id: number) => void;
   removeFromSaved: (id: number) => void;
+  markAsDone: (id: number) => void;
 }
 
 const FitlogContext = createContext<FitlogContextType | undefined>(
@@ -97,6 +98,10 @@ export function FitlogProvider({
     setPlan(plan.filter((item) => item.id !== id));
     toast.success("Removed from today's plan");
   };
+  const markAsDone = (id: number) => {
+    setPlan(plan.filter((item) => item.id !== id));
+    toast.success("Workout completed!");
+  };
 
   const removeFromSaved = (id: number) => {
     setSaved(saved.filter((item) => item.id !== id));
@@ -112,6 +117,7 @@ export function FitlogProvider({
         saveForLater,
         removeFromPlan,
         removeFromSaved,
+        markAsDone,
       }}
     >
       {children}

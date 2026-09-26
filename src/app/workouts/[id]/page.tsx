@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { Workout } from "@/types/workoutType";
 import { useFitlog } from "@/context/FitlogContext";
+import Image from "next/image";
 
 export default function WorkoutDetails() {
   const params = useParams();
@@ -57,7 +58,7 @@ export default function WorkoutDetails() {
 
           {/* imagee */}
           <div>
-            <img
+            <Image
               src={workout.image}
               alt={workout.name}
               className="h-full max-h-[650px] w-full rounded-2xl object-cover"
