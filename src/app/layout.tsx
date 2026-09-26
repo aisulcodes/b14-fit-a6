@@ -3,6 +3,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { FitlogProvider } from "@/context/FitlogContext";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,11 +29,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       data-theme="dark"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-       <body className="bg-[#0d0e10] text-white">
-        <Navbar />
-        {children}  
-         <Footer />
+      <body className="bg-[#0d0e10] text-white">
+        <FitlogProvider>
+          <Navbar />
+          {children}
+          <ToastContainer position="top-right" />
+          <Footer />
+        </FitlogProvider>
       </body>
-    </html>
+    </html >
   );
 }
