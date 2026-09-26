@@ -2,127 +2,192 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-
 import { Workout } from "@/types/workoutType";
 import { useFitlog } from "@/context/FitlogContext";
 
 export default function WorkoutDetails() {
   const params = useParams();
+
   const { addToPlan, saveForLater } = useFitlog();
 
   const [workout, setWorkout] = useState<Workout | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("https://api.abcz.workers.dev/api/fitlog")
-      .then((response) => response.json())
-      .then((data: Workout[]) => {
-        const foundWorkout = data.find(
-          (item) => item.id === Number(params.id)
+    const fetchWorkout = async () => {
+      try {
+        const response = await fetch(
+          `https://api.abcz.workers.dev/api/fitlog/${params.id}`
         );
 
-        setWorkout(foundWorkout || null);
-      });
+        const data: Workout = await response.json();
+
+        setWorkout(data);
+      } catch (error) {
+        console.error("Failed to fetch workout:", error);
+        setWorkout(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchWorkout();
   }, [params.id]);
+
+  if (loading) {
+    return (
+      <main className="min-h-screen bg-[#0d0e10] px-6 py-20 text-white">
+        <p className="text-gray-400">Loading workout...</p>
+      </main>
+    );
+  }
 
   if (!workout) {
     return (
       <main className="min-h-screen bg-[#0d0e10] px-6 py-20 text-white">
-        <h1 className="text-3xl font-bold">
-          Workout not found
-        </h1>
+        <h1 className="text-3xl font-bold">Workout not found</h1>
       </main>
     );
   }
 
   return (
-    <main className="min-h-screen bg-[#0d0e10] px-6 py-16 text-white md:px-10">
+    <main className="min-h-screen bg-[#0d0e10] px-6 py-10 text-white md:px-10">
       <div className="mx-auto max-w-6xl">
         <div className="grid gap-10 md:grid-cols-2">
 
-          {/* Image */}
-          <img
-            src={workout.image}
-            alt={workout.name}
-            className="w-full rounded-2xl object-cover"
-          />
-
-          {/* Details */}
+          {/* imagee */}
           <div>
+            <img
+              src={workout.image}
+              alt={workout.name}
+              className="h-full max-h-[650px] w-full rounded-2xl object-cover"
+            />
+          </div>
 
-            {/* Muscle Groups */}
+          {/* details */}
+          <div className="flex flex-col">
+
+            {/* muscle groups */}
             <div className="flex flex-wrap gap-2">
               {workout.muscleGroups.map((muscle) => (
                 <span
                   key={muscle}
                   className="rounded-full bg-[#b7ff3c] px-3 py-1 text-xs font-bold uppercase text-black"
                 >
-                  {muscle}
-                </span>
+                  {muscle}</span>
               ))}
             </div>
 
-            {/* Workout Name */}
-            <h1 className="mt-5 text-4xl font-bold uppercase">
-              {workout.name}
-            </h1>
+            {/* workout er nam */}
+            <h1 className="mt-5 text-4xl font-bold uppercase md:text-5xl">
+              {workout.name}</h1>
 
-            {/* Description */}
-            <p className="mt-4 text-gray-400">
-              {workout.description}
-            </p>
+            {/* dc */}
+            <p className="mt-4 leading-7 text-gray-400">
+              {workout.description}</p>
 
-            {/* Stats */}
-            <div className="mt-6 grid grid-cols-3 gap-3">
+            {/* workout Info */}
+            <div className="mt-7 overflow-hidden rounded-xl border border-[#20232a] bg-[#15171c]">
 
-              <div>
-                <p className="text-xs text-gray-500">
+              {/* equipment */}
+              <div className="flex items-center justify-between border-b border-[#20232a] px-4 py-4">
+                <span className="text-xs uppercase text-gray-500">
+                  Equipment</span>
+                <span className="text-sm text-gray-200">
+                  {workout.equipment}</span>
+              </div>
+
+              {/* difficulty */}
+              <div className="flex items-center justify-between border-b border-[#20232a] px-4 py-4">
+                <span className="text-xs uppercase text-gray-500">
+                  Difficulty</span>
+                <span className="text-sm text-gray-200">
+                  {workout.difficulty}</span>
+              </div>
+
+              {/* sets */}
+              <div className="flex items-center justify-between border-b border-[#20232a] px-4 py-4">
+                <span className="text-xs uppercase text-gray-500">
+                  Sets</span>
+
+                <span className="text-sm text-gray-200">
+                  {workout.sets}</span>
+              </div>
+
+              {/* rreps */}
+              <div className="flex items-center justify-between border-b border-[#20232a] px-4 py-4">
+                <span className="text-xs uppercase text-gray-500">
+                  Reps</span>
+
+                <span className="text-sm text-gray-200">
+                  {workout.reps}</span>
+              </div>
+
+              {/* durations */}
+              <div className="flex items-center justify-between border-b border-[#20232a] px-4 py-4">
+                <span className="text-xs uppercase text-gray-500">
                   Duration
-                </p>
-
-                <p>
+                </span>
+                <span className="text-sm text-gray-200">
                   {workout.duration} min
-                </p>
+                </span>
               </div>
 
-              <div>
-                <p className="text-xs text-gray-500">
+              {/* calories */}
+              <div className="flex items-center justify-between border-b border-[#20232a] px-4 py-4">
+                <span className="text-xs uppercase text-gray-500">
                   Calories
-                </p>
-
-                <p>
+                </span>
+                <span className="text-sm text-gray-200">
                   {workout.caloriesBurned} kcal
-                </p>
+                </span>
               </div>
 
-              <div>
-                <p className="text-xs text-gray-500">
+              {/* rating */}
+              <div className="flex items-center justify-between px-4 py-4">
+                <span className="text-xs uppercase text-gray-500">
                   Rating
-                </p>
-
-                <p>
+                </span>
+                <span className="text-sm text-gray-200">
                   ★ {workout.rating}
-                </p>
+                </span>
               </div>
-
             </div>
 
-            {/* Buttons */}
-            <div className="mt-8 flex flex-wrap gap-4">
+            {/* instructions  */}
+            <div className="mt-7">
+              <h2 className="text-sm font-bold uppercase">
+                Instructions
+              </h2>
 
+              <ol className="mt-4 space-y-3 text-sm leading-6 text-gray-400">
+                {workout.instructions.map((instruction, index) => (
+                  <li key={index} className="flex gap-3">
+                    <span className="text-gray-500">
+                      {index + 1}.
+                    </span>
+
+                    <span>{instruction}</span>
+                  </li>
+                ))}
+              </ol>
+            </div>
+
+            {/* btn */}
+            <div className="mt-8 flex flex-wrap gap-4">
               <button
                 onClick={() => addToPlan(workout)}
-                className="rounded-full bg-[#b7ff3c] px-6 py-3 font-bold uppercase text-black"
+                className="rounded-full bg-[#b7ff3c] px-6 py-3 text-sm font-bold uppercase text-black transition hover:bg-[#c9ff70]"
               >
                 Add to today's plan
               </button>
 
               <button
                 onClick={() => saveForLater(workout)}
-                className="rounded-full border border-[#b7ff3c] px-6 py-3 font-bold uppercase text-[#b7ff3c]"
+                className="rounded-full border border-[#b7ff3c] px-6 py-3 text-sm font-bold uppercase text-[#b7ff3c] transition hover:bg-[#b7ff3c] hover:text-black"
               >
                 Save for later
               </button>
-
             </div>
 
           </div>

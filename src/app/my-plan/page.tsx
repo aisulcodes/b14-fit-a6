@@ -29,7 +29,7 @@ export default function MyPlan() {
         Manage your workouts and saved exercises.
       </p>
 
-      {/* Tabs */}
+      {/* tabs setup */}
       <div className="mt-8 flex gap-3">
         <button
           onClick={() => setActiveTab("plan")}
@@ -54,7 +54,7 @@ export default function MyPlan() {
         </button>
       </div>
 
-      {/* Cards */}
+      {/* cart */}
       <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {workouts.map((workout) => (
           <div
@@ -105,7 +105,7 @@ export default function MyPlan() {
         ))}
       </div>
 
-      {/* Empty State */}
+      {/* empty state */}
       {workouts.length === 0 && (
         <div className="mt-12 text-center text-gray-500">
           <p>
